@@ -231,7 +231,7 @@ void ModelVisualizer::createVisualizer() {
     // follows: first look in the same directory as the currently-
     // executing executable; then look at all the paths in the environment
     // variable PATH, then look in various default Simbody places.
-    Array_<String> searchPath;
+    Array_<String> searchPath = _model.getVisualizerExecutableSearchDirs();
     if (SimTK::Pathname::environmentVariableExists("PATH")) {
         const auto& path = SimTK::Pathname::getEnvironmentVariable("PATH");
         std::string buffer{};

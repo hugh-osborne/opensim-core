@@ -332,7 +332,19 @@ public:
     /** Return the current setting of the "use visualizer" flag, which will
     take effect at the next call to initSystem() on this %Model. **/
     bool getUseVisualizer() const {return _useVisualizer;}
-
+	
+	/** When using visualization, simbody looks for simbody-visualizer.exe in
+	certain directory locations. It is fairly comprehensive but calling 
+	addVisualizerExectuableSearchDir allows the user to specify futher
+	locations to check. **/
+	void addVisualizerExectuableSearchDir(SimTK::String dir) {
+		_additionalVisualizerSearchDirs.push_back(dir);
+	}
+	
+	/** Return the list of additional directories for opensim to check for
+	opensim-visualizer.exe when visualization is requested. **/
+	SimTK::Array_<SimTK::String>& getVisualizerExecutableSearchDirs() { return _additionalVisualizerSearchDirs; } 
+	
     /** Test whether a ModelVisualizer has been created for this Model. Even
     if visualization has been requested there will be no visualizer present
     until initSystem() has been successfully invoked. Use this method prior
@@ -1161,6 +1173,7 @@ private:
     // If this flag is set when initSystem() is called, we'll allocate
     // a ModelVisualizer for display.
     bool _useVisualizer;
+	SimTK::Array_<SimTK::String> _additionalVisualizerSearchDirs;
 
     // Global flag used to disable all Controllers.
     bool _allControllersEnabled;
